@@ -1,1 +1,1038 @@
+<!DOCTYPE html>
 
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Hyderabad House Price Predictor
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- ================================= -->
+    <!-- MAIN CARD -->
+    <!-- ================================= -->
+
+    <div class="card">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="house-icon">
+                🏠
+            </div>
+
+            <div>
+
+                <h1>
+                    Hyderabad House
+                </h1>
+
+                <h1>
+                    Price Predictor
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <p class="subtitle">
+
+            Estimate the market value of your
+            property using Machine Learning
+
+        </p>
+
+
+
+        <!-- ================================= -->
+        <!-- FORM -->
+        <!-- ================================= -->
+
+        <form action="/predict"
+              method="POST">
+
+
+            <!-- LOCATION -->
+
+            <div class="form-group">
+
+                <label>
+                    📍 Location
+                </label>
+
+
+                <div class="select-box"
+                     onclick="openPopup('locationPopup')">
+
+                    <span id="locationText">
+
+                        {% if selected_location %}
+                            {{ selected_location }}
+                        {% else %}
+                            Select Location
+                        {% endif %}
+
+                    </span>
+
+                    <span class="arrow">
+                        ▼
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="hidden"
+                    name="location"
+                    id="locationInput"
+                    value="{{ selected_location or '' }}"
+                >
+
+            </div>
+
+
+
+            <!-- PROPERTY TYPE -->
+
+            <div class="form-group">
+
+                <label>
+                    🏢 Property Type
+                </label>
+
+
+                <div class="select-box"
+                     onclick="openPopup('propertyPopup')">
+
+                    <span id="propertyText">
+
+                        {% if selected_property %}
+                            {{ selected_property }}
+                        {% else %}
+                            Select Property Type
+                        {% endif %}
+
+                    </span>
+
+                    <span class="arrow">
+                        ▼
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="hidden"
+                    name="PropertyType"
+                    id="propertyInput"
+                    value="{{ selected_property or '' }}"
+                >
+
+            </div>
+
+
+
+            <!-- BUILDING STATUS -->
+
+            <div class="form-group">
+
+                <label>
+                    🏗️ Building Status
+                </label>
+
+
+                <div class="select-box"
+                     onclick="openPopup('statusPopup')">
+
+                    <span id="statusText">
+
+                        {% if selected_status %}
+                            {{ selected_status }}
+                        {% else %}
+                            Select Building Status
+                        {% endif %}
+
+                    </span>
+
+                    <span class="arrow">
+                        ▼
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="hidden"
+                    name="building_status"
+                    id="statusInput"
+                    value="{{ selected_status or '' }}"
+                >
+
+            </div>
+
+
+
+            <!-- BHK -->
+
+            <div class="form-group">
+
+                <label>
+                    🛏️ BHK
+                </label>
+
+
+                <div class="select-box"
+                     onclick="openPopup('bhkPopup')">
+
+                    <span id="bhkText">
+
+                        {% if selected_bhk %}
+                            {{ selected_bhk }} BHK
+                        {% else %}
+                            Select BHK
+                        {% endif %}
+
+                    </span>
+
+                    <span class="arrow">
+                        ▼
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="hidden"
+                    name="BHK"
+                    id="bhkInput"
+                    value="{{ selected_bhk or '' }}"
+                >
+
+            </div>
+
+
+
+            <!-- AREA -->
+
+            <div class="form-group">
+
+                <label>
+                    📐 Area (sq ft)
+                </label>
+
+
+                <input
+                    type="number"
+                    name="area_insqft"
+                    placeholder="Enter Area"
+                    min="100"
+                    step="1"
+                    value="{{ selected_area or '' }}"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- PREDICT BUTTON -->
+
+            <button
+                type="submit"
+                class="predict-btn">
+
+                Predict Property Price
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- ================================= -->
+        <!-- RESULT -->
+        <!-- ================================= -->
+
+        {% if prediction is defined %}
+
+
+        <div class="result-card">
+
+
+            <h2 class="result-heading">
+
+                Estimated Property
+                <br>
+                Value
+
+            </h2>
+
+
+            <div class="main-price">
+
+                ₹{{ "%.2f"|format(prediction) }}
+                Crore
+
+            </div>
+
+
+
+            <!-- EXPECTED RANGE -->
+
+            <div class="expected-range">
+
+                <strong>
+                    Expected Range:
+                </strong>
+
+                <br>
+
+                ₹{{ "%.2f"|format(lower) }}
+                Crore
+
+                -
+
+                ₹{{ "%.2f"|format(upper) }}
+                Crore
+
+            </div>
+
+
+
+            <!-- CATEGORY -->
+
+            <div class="category">
+
+                <span class="category-emoji">
+                    {{ emoji }}
+                </span>
+
+                {{ category }}
+
+            </div>
+
+
+
+            <div class="divider"></div>
+
+
+
+            <!-- PROPERTY SUMMARY -->
+
+            <h3 class="summary-title">
+
+                📋 Property Summary
+
+            </h3>
+
+
+
+            <div class="summary">
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Location:
+                    </span>
+
+                    <strong>
+                        {{ selected_location }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Property Type:
+                    </span>
+
+                    <strong>
+                        {{ selected_property }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Status:
+                    </span>
+
+                    <strong>
+                        {{ selected_status }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="summary-row">
+
+                    <span>
+                        BHK:
+                    </span>
+
+                    <strong>
+                        {{ selected_bhk }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Area:
+                    </span>
+
+                    <strong>
+                        {{ selected_area }} sq ft
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- LOCATION POPUP -->
+<!-- ========================================= -->
+
+<div class="popup-overlay"
+     id="locationPopup">
+
+
+    <div class="popup">
+
+
+        <div class="popup-header">
+
+            <span>
+                Select Location
+            </span>
+
+            <button
+                type="button"
+                onclick="closePopup('locationPopup')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <div class="options">
+
+
+            <div class="option"
+                 onclick="selectLocation('Kondapur')">
+
+                <span>
+                    Kondapur
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Gachibowli')">
+
+                <span>
+                    Gachibowli
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Miyapur')">
+
+                <span>
+                    Miyapur
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Manikonda')">
+
+                <span>
+                    Manikonda
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Narsingi')">
+
+                <span>
+                    Narsingi
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Kukatpally')">
+
+                <span>
+                    Kukatpally
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Tellapur')">
+
+                <span>
+                    Tellapur
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Kompally')">
+
+                <span>
+                    Kompally
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Patancheru')">
+
+                <span>
+                    Patancheru
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectLocation('Ameenpur')">
+
+                <span>
+                    Ameenpur
+                </span>
+
+                <input
+                    type="radio"
+                    name="locationRadio"
+                >
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- BHK POPUP -->
+<!-- ========================================= -->
+
+<div class="popup-overlay"
+     id="bhkPopup">
+
+
+    <div class="popup">
+
+
+        <div class="popup-header">
+
+            <span>
+                Select BHK
+            </span>
+
+            <button
+                type="button"
+                onclick="closePopup('bhkPopup')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <div class="options">
+
+
+            <div class="option"
+                 onclick="selectBHK(1)">
+
+                <span>
+                    1
+                </span>
+
+                <input
+                    type="radio"
+                    name="bhkRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectBHK(2)">
+
+                <span>
+                    2
+                </span>
+
+                <input
+                    type="radio"
+                    name="bhkRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectBHK(3)">
+
+                <span>
+                    3
+                </span>
+
+                <input
+                    type="radio"
+                    name="bhkRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectBHK(4)">
+
+                <span>
+                    4
+                </span>
+
+                <input
+                    type="radio"
+                    name="bhkRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectBHK(5)">
+
+                <span>
+                    5
+                </span>
+
+                <input
+                    type="radio"
+                    name="bhkRadio"
+                >
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- PROPERTY TYPE POPUP -->
+<!-- ========================================= -->
+
+<div class="popup-overlay"
+     id="propertyPopup">
+
+
+    <div class="popup">
+
+
+        <div class="popup-header">
+
+            <span>
+                Select Property Type
+            </span>
+
+            <button
+                type="button"
+                onclick="closePopup('propertyPopup')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <div class="options">
+
+
+            <div class="option"
+                 onclick="selectProperty('Apartment')">
+
+                <span>
+                    Apartment
+                </span>
+
+                <input
+                    type="radio"
+                    name="propertyRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectProperty('Independent House')">
+
+                <span>
+                    Independent House
+                </span>
+
+                <input
+                    type="radio"
+                    name="propertyRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectProperty('Villa')">
+
+                <span>
+                    Villa
+                </span>
+
+                <input
+                    type="radio"
+                    name="propertyRadio"
+                >
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- BUILDING STATUS POPUP -->
+<!-- ========================================= -->
+
+<div class="popup-overlay"
+     id="statusPopup">
+
+
+    <div class="popup">
+
+
+        <div class="popup-header">
+
+            <span>
+                Select Building Status
+            </span>
+
+            <button
+                type="button"
+                onclick="closePopup('statusPopup')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <div class="options">
+
+
+            <div class="option"
+                 onclick="selectStatus('Ready to move')">
+
+                <span>
+                    Ready to move
+                </span>
+
+                <input
+                    type="radio"
+                    name="statusRadio"
+                >
+
+            </div>
+
+
+
+            <div class="option"
+                 onclick="selectStatus('Under Construction')">
+
+                <span>
+                    Under Construction
+                </span>
+
+                <input
+                    type="radio"
+                    name="statusRadio"
+                >
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================= -->
+
+<script>
+
+
+function openPopup(id) {
+
+    document
+        .getElementById(id)
+        .classList
+        .add("active");
+
+}
+
+
+function closePopup(id) {
+
+    document
+        .getElementById(id)
+        .classList
+        .remove("active");
+
+}
+
+
+/* LOCATION */
+
+function selectLocation(location) {
+
+    document
+        .getElementById("locationText")
+        .innerText = location;
+
+    document
+        .getElementById("locationInput")
+        .value = location;
+
+    closePopup("locationPopup");
+
+}
+
+
+/* BHK */
+
+function selectBHK(bhk) {
+
+    document
+        .getElementById("bhkText")
+        .innerText = bhk + " BHK";
+
+    document
+        .getElementById("bhkInput")
+        .value = bhk;
+
+    closePopup("bhkPopup");
+
+}
+
+
+/* PROPERTY */
+
+function selectProperty(property) {
+
+    document
+        .getElementById("propertyText")
+        .innerText = property;
+
+    document
+        .getElementById("propertyInput")
+        .value = property;
+
+    closePopup("propertyPopup");
+
+}
+
+
+/* STATUS */
+
+function selectStatus(status) {
+
+    document
+        .getElementById("statusText")
+        .innerText = status;
+
+    document
+        .getElementById("statusInput")
+        .value = status;
+
+    closePopup("statusPopup");
+
+}
+
+
+/* CLOSE POPUP BY CLICKING OUTSIDE */
+
+document
+    .querySelectorAll(".popup-overlay")
+    .forEach(function(overlay) {
+
+        overlay.addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === overlay) {
+
+                    overlay
+                        .classList
+                        .remove("active");
+
+                }
+
+            }
+        );
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>
