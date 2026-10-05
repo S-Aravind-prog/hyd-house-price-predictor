@@ -1,0 +1,787 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f8fafc
+        );
+
+    min-height: 100vh;
+
+    color: #172033;
+
+}
+
+
+/* ================================= */
+/* MAIN PAGE */
+/* ================================= */
+
+.page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 25px 15px;
+
+}
+
+
+.card {
+
+    width: 100%;
+
+    max-width: 540px;
+
+    background: white;
+
+    border-radius: 28px;
+
+    padding: 32px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.12);
+
+}
+
+
+/* ================================= */
+/* HEADER */
+/* ================================= */
+
+.header {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.house-icon {
+
+    font-size: 48px;
+
+}
+
+
+.header h1 {
+
+    font-size: 29px;
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+}
+
+
+.subtitle {
+
+    text-align: center;
+
+    margin-top: 16px;
+
+    margin-bottom: 30px;
+
+    color: #667085;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ================================= */
+/* FORM */
+/* ================================= */
+
+.form-group {
+
+    margin-bottom: 20px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+}
+
+
+.select-box {
+
+    width: 100%;
+
+    height: 56px;
+
+    padding: 0 17px;
+
+    border:
+        1.5px solid #d0d5dd;
+
+    border-radius: 13px;
+
+    background: white;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 16px;
+
+    color: #344054;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.select-box:hover {
+
+    border-color: #5146d8;
+
+}
+
+
+.arrow {
+
+    font-size: 16px;
+
+    color: #667085;
+
+}
+
+
+input[type="number"] {
+
+    width: 100%;
+
+    height: 56px;
+
+    padding: 0 17px;
+
+    border:
+        1.5px solid #d0d5dd;
+
+    border-radius: 13px;
+
+    outline: none;
+
+    font-size: 16px;
+
+}
+
+
+input[type="number"]:focus {
+
+    border-color: #5146d8;
+
+}
+
+
+/* ================================= */
+/* BUTTON */
+/* ================================= */
+
+.predict-btn {
+
+    width: 100%;
+
+    height: 60px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4338ca,
+            #5146d8
+        );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.predict-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(79, 70, 229, 0.30);
+
+}
+
+
+/* ================================= */
+/* RESULT CARD */
+/* ================================= */
+
+.result-card {
+
+    margin-top: 32px;
+
+    padding: 42px 38px;
+
+    background: #f8f9fc;
+
+    border-radius: 28px;
+
+    border-left:
+        9px solid #5146d8;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.04);
+
+}
+
+
+/* HEADING */
+
+.result-heading {
+
+    color: #5146d8;
+
+    font-size: 36px;
+
+    line-height: 1.25;
+
+    font-weight: 800;
+
+}
+
+
+/* MAIN PRICE */
+
+.main-price {
+
+    margin-top: 27px;
+
+    color: #101828;
+
+    font-size: 42px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+}
+
+
+/* EXPECTED RANGE */
+
+.expected-range {
+
+    margin-top: 22px;
+
+    padding: 20px 15px;
+
+    background: #f0f1f4;
+
+    border-radius: 16px;
+
+    text-align: center;
+
+    color: #344054;
+
+    font-size: 18px;
+
+    line-height: 1.5;
+
+}
+
+
+.expected-range strong {
+
+    font-weight: 700;
+
+}
+
+
+/* ================================= */
+/* CATEGORY */
+/* ================================= */
+
+.category {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 22px;
+
+    padding: 14px 22px;
+
+    background: #eee9ff;
+
+    color: #5146d8;
+
+    border-radius: 30px;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+}
+
+
+.category-emoji {
+
+    font-size: 22px;
+
+}
+
+
+/* ================================= */
+/* DIVIDER */
+/* ================================= */
+
+.divider {
+
+    height: 1px;
+
+    background: #d0d5dd;
+
+    margin: 28px 0;
+
+}
+
+
+/* ================================= */
+/* SUMMARY */
+/* ================================= */
+
+.summary-title {
+
+    font-size: 25px;
+
+    color: #101828;
+
+    margin-bottom: 20px;
+
+}
+
+
+.summary {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+}
+
+
+.summary-row {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    font-size: 19px;
+
+    color: #344054;
+
+}
+
+
+.summary-row span {
+
+    font-weight: 700;
+
+}
+
+
+.summary-row strong {
+
+    font-weight: 400;
+
+}
+
+
+/* ================================= */
+/* POPUP OVERLAY */
+/* ================================= */
+
+.popup-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.58);
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+
+    z-index: 1000;
+
+}
+
+
+.popup-overlay.active {
+
+    visibility: visible;
+
+    opacity: 1;
+
+}
+
+
+/* ================================= */
+/* POPUP */
+/* ================================= */
+
+.popup {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    background: #292929;
+
+    color: white;
+
+    border-radius:
+        26px 26px 0 0;
+
+    transform:
+        translateY(100%);
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.popup-overlay.active .popup {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* ================================= */
+/* POPUP HEADER */
+/* ================================= */
+
+.popup-header {
+
+    height: 72px;
+
+    padding:
+        0 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    font-size: 22px;
+
+    font-weight: 500;
+
+    position: sticky;
+
+    top: 0;
+
+    background: #292929;
+
+    z-index: 2;
+
+}
+
+
+.popup-header button {
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #ddd;
+
+    font-size: 32px;
+
+    cursor: pointer;
+
+}
+
+
+/* ================================= */
+/* OPTIONS */
+/* ================================= */
+
+.option {
+
+    min-height: 72px;
+
+    padding:
+        0 25px;
+
+    border-top:
+        1px solid #444;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+}
+
+
+.option:hover {
+
+    background: #333;
+
+}
+
+
+/* RADIO */
+
+.option input[type="radio"] {
+
+    appearance: none;
+
+    width: 23px;
+
+    height: 23px;
+
+    border:
+        2px solid #ccc;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+}
+
+
+.option:hover input[type="radio"] {
+
+    border-color: white;
+
+}
+
+
+/* ================================= */
+/* MOBILE */
+/* ================================= */
+
+@media (max-width: 600px) {
+
+
+    .page {
+
+        padding:
+            20px 12px;
+
+        align-items:
+            flex-start;
+
+        padding-top:
+            25px;
+
+    }
+
+
+    .card {
+
+        padding:
+            27px 20px;
+
+        border-radius:
+            24px;
+
+    }
+
+
+    .header h1 {
+
+        font-size: 25px;
+
+    }
+
+
+    .house-icon {
+
+        font-size: 40px;
+
+    }
+
+
+    .subtitle {
+
+        font-size: 14px;
+
+    }
+
+
+    .result-card {
+
+        padding:
+            35px 27px;
+
+        border-left-width:
+            8px;
+
+    }
+
+
+    .result-heading {
+
+        font-size:
+            30px;
+
+    }
+
+
+    .main-price {
+
+        font-size:
+            36px;
+
+        margin-top:
+            25px;
+
+    }
+
+
+    .expected-range {
+
+        font-size:
+            17px;
+
+        padding:
+            18px 10px;
+
+    }
+
+
+    .category {
+
+        font-size:
+            18px;
+
+        padding:
+            13px 20px;
+
+    }
+
+
+    .summary-title {
+
+        font-size:
+            23px;
+
+    }
+
+
+    .summary-row {
+
+        font-size:
+            18px;
+
+    }
+
+
+    .popup {
+
+        max-height:
+            83vh;
+
+    }
+
+
+    .option {
+
+        min-height:
+            72px;
+
+        font-size:
+            20px;
+
+    }
+
+}
